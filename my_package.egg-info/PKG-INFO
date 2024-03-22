@@ -1,0 +1,5 @@
+Metadata-Version: 2.1
+Name: my_package
+Version: 1.0.0
+Summary: Package for taking JSON input and uploading to S3
+Requires-Dist: boto3
