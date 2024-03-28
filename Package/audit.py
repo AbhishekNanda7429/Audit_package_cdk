@@ -14,22 +14,23 @@ logger = logging.getLogger(__name__)
 # #get the bucketname
 bucket_name = os.getenv('bucket')
 
-def audit(clb_name,esp_name,record_fetched,success_record,failed_record):
+def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlation_id):
     json_data= {
         "club_name": clb_name,
         "timestamp" : str(datetime.now()),
         "esp_name": esp_name,
         "number-of-records-fetched": record_fetched,
         "success-records": success_record,
-        "failed-records": failed_record
+        "failed-records": failed_record,
+        "correlation_id": correlation_id
     }
 
     try:
         # Generate a UUID
-        unique_id = uuid.uuid4()
+        # unique_id = uuid.uuid4()
 
         # Convert UUID to string
-        unique_id_str = str(unique_id)
+        # unique_id_str = str(unique_id)
 
         # Get the current date and time
         current_datetime = datetime.now()
@@ -38,7 +39,7 @@ def audit(clb_name,esp_name,record_fetched,success_record,failed_record):
         formatted_datetime = current_datetime.strftime("%Y/%m/%d/%H/%M")
 
         # Create the filename using the formatted date and time
-        filename = f"{clb_name}/{formatted_datetime}/{unique_id_str}.json"
+        filename = f"{clb_name}/{formatted_datetime}/{correlation_id}.json"
 
         # Convert JSON data to a JSON string
         json_string = json.dumps(json_data)
