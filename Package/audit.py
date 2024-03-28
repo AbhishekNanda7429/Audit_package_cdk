@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 logger = logging.getLogger(__name__)
 
 # #get the bucketname
-bucket_name = os.getenv('bucket')
+bucket_name = 'onetrust-input'
 
 def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlation_id):
     json_data= {
@@ -27,10 +27,10 @@ def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlat
 
     try:
         # Generate a UUID
-        unique_id = uuid.uuid4()
+        # unique_id = uuid.uuid4()
 
         # Convert UUID to string
-        unique_id_str = str(unique_id)
+        # unique_id_str = str(unique_id)
 
         # Get the current date and time
         current_datetime = datetime.now()
@@ -43,10 +43,16 @@ def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlat
 
         # Convert JSON data to a JSON string
         json_string = json.dumps(json_data)
-
+        
+        # logger.info("filename:", filename)
+        # logger.info("json_string:", json_data)
+        print(f"JSON String:", json_string)
+        print(f"Filename:", filename)
+        print(f"Bucket Name", bucket_name)
+        
         # Create an S3 client
         s3_client = boto3.client('s3')
-
+        
         # Upload JSON data to S3
         response = s3_client.put_object(
             Bucket= bucket_name,
@@ -54,7 +60,7 @@ def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlat
             Body=json_string
         )
         logger.info("File uploaded successfully.")
-        # print(f"JSON data successfully uploaded to S3")
+        # print(f"JSON data successfully uploaded to S3", json_string)
         return True
     except Exception as e:
         raise RuntimeError ("Error uploading JSON data to S3: ",e) 
