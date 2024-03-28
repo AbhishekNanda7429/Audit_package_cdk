@@ -1,8 +1,6 @@
 import json
 import boto3
-import uuid
 import logging
-import os
 from datetime import datetime
 
 # Configure logging
@@ -26,11 +24,6 @@ def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlat
     }
 
     try:
-        # Generate a UUID
-        # unique_id = uuid.uuid4()
-
-        # Convert UUID to string
-        # unique_id_str = str(unique_id)
 
         # Get the current date and time
         current_datetime = datetime.now()
@@ -46,9 +39,9 @@ def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlat
         
         # logger.info("filename:", filename)
         # logger.info("json_string:", json_data)
-        print(f"JSON String:", json_string)
-        print(f"Filename:", filename)
-        print(f"Bucket Name", bucket_name)
+        # print(f"JSON String:", json_string)
+        # print(f"Filename:", filename)
+        # print(f"Bucket Name", bucket_name)
         
         # Create an S3 client
         s3_client = boto3.client('s3')
@@ -59,9 +52,8 @@ def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlat
             Key=filename,
             Body=json_string
         )
-        logger.info("File uploaded successfully.")
-        # print(f"JSON data successfully uploaded to S3", json_string)
+        logger.info("File uploaded successfully.")        
         return True
+    
     except Exception as e:
         raise RuntimeError ("Error uploading JSON data to S3: ",e) 
-
