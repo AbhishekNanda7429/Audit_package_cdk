@@ -27,10 +27,10 @@ def audit(clb_name,esp_name,record_fetched,success_record,failed_record,correlat
 
     try:
         # Generate a UUID
-        # unique_id = uuid.uuid4()
+        unique_id = uuid.uuid4()
 
         # Convert UUID to string
-        # unique_id_str = str(unique_id)
+        unique_id_str = str(unique_id)
 
         # Get the current date and time
         current_datetime = datetime.now()
